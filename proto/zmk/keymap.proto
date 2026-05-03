@@ -16,6 +16,11 @@ message Request {
         RemoveLayerRequest remove_layer = 10;
         RestoreLayerRequest restore_layer = 11;
         SetLayerPropsRequest set_layer_props = 12;
+        bool get_profile_count = 13;
+        bool get_active_profile = 14;
+        bool profile_next = 15;
+        bool profile_prev = 16;
+        uint32 profile_select = 17;
     }
 }
 
@@ -33,6 +38,11 @@ message Response {
         RemoveLayerResponse remove_layer = 10;
         RestoreLayerResponse restore_layer = 11;
         SetLayerPropsResponse set_layer_props = 12;
+        uint32 get_profile_count = 13;
+        uint32 get_active_profile = 14;
+        SetProfileResponse profile_next = 15;
+        SetProfileResponse profile_prev = 16;
+        SetProfileResponse profile_select = 17;
     }
 }
 
@@ -68,6 +78,17 @@ message SetActivePhysicalLayoutResponse {
         Keymap ok = 1;
         SetActivePhysicalLayoutErrorCode err = 2;
     }
+}
+
+message SetProfileResponse {
+    oneof result {
+        uint32 ok = 1;
+        SetProfileErrorCode err = 2;
+    }
+}
+enum SetProfileErrorCode {
+    SET_PROFILE_ERR_OK = 0;
+    SET_PROFILE_ERR_GENERIC = 1;
 }
 
 enum MoveLayerErrorCode {
