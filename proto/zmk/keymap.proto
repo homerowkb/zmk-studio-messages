@@ -22,6 +22,7 @@ message Request {
         bool profile_prev = 16;
         uint32 profile_select = 17;
         CloneProfileRequest clone_profile = 18;
+        CloneLayerRequest clone_layer = 19;
     }
 }
 
@@ -45,6 +46,7 @@ message Response {
         SetProfileResponse profile_prev = 16;
         SetProfileResponse profile_select = 17;
         CloneProfileResponse clone_profile = 18;
+        CloneLayerResponse clone_layer = 19;
     }
 }
 
@@ -190,6 +192,24 @@ message SetLayerBindingRequest {
     int32 key_position = 2;
 
     BehaviorBinding binding = 3;
+}
+
+message CloneLayerRequest {
+    uint32 source_layer = 1;
+    uint32 dest_layer = 2;
+}
+
+message CloneLayerResponse {
+    oneof result {
+        bool ok = 1;
+        CloneLayerErrorCode err = 2;
+    }
+}
+
+enum CloneLayerErrorCode {
+    CLONE_LAYER_ERR_OK = 0;
+    CLONE_LAYER_ERR_GENERIC = 1;
+    CLONE_LAYER_ERR_INVALID_LAYER = 2;
 }
 
 message MoveLayerRequest {
