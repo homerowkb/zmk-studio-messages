@@ -16,6 +16,13 @@ message Request {
         RemoveLayerRequest remove_layer = 10;
         RestoreLayerRequest restore_layer = 11;
         SetLayerPropsRequest set_layer_props = 12;
+        bool get_profile_count = 13;
+        bool get_active_profile = 14;
+        bool profile_next = 15;
+        bool profile_prev = 16;
+        uint32 profile_select = 17;
+        CloneProfileRequest clone_profile = 18;
+        CloneLayerRequest clone_layer = 19;
     }
 }
 
@@ -33,6 +40,13 @@ message Response {
         RemoveLayerResponse remove_layer = 10;
         RestoreLayerResponse restore_layer = 11;
         SetLayerPropsResponse set_layer_props = 12;
+        uint32 get_profile_count = 13;
+        uint32 get_active_profile = 14;
+        SetProfileResponse profile_next = 15;
+        SetProfileResponse profile_prev = 16;
+        SetProfileResponse profile_select = 17;
+        CloneProfileResponse clone_profile = 18;
+        CloneLayerResponse clone_layer = 19;
     }
 }
 
@@ -68,6 +82,35 @@ message SetActivePhysicalLayoutResponse {
         Keymap ok = 1;
         SetActivePhysicalLayoutErrorCode err = 2;
     }
+}
+
+message SetProfileResponse {
+    oneof result {
+        uint32 ok = 1;
+        SetProfileErrorCode err = 2;
+    }
+}
+enum SetProfileErrorCode {
+    SET_PROFILE_ERR_OK = 0;
+    SET_PROFILE_ERR_GENERIC = 1;
+}
+
+message CloneProfileRequest {
+    uint32 source_profile = 1;
+    uint32 dest_profile = 2;
+}
+
+message CloneProfileResponse {
+    oneof result {
+        bool ok = 1;
+        CloneProfileErrorCode err = 2;
+    }
+}
+
+enum CloneProfileErrorCode {
+    CLONE_PROFILE_ERR_OK = 0;
+    CLONE_PROFILE_ERR_GENERIC = 1;
+    CLONE_PROFILE_ERR_INVALID_PROFILE = 2;
 }
 
 enum MoveLayerErrorCode {
@@ -149,6 +192,24 @@ message SetLayerBindingRequest {
     int32 key_position = 2;
 
     BehaviorBinding binding = 3;
+}
+
+message CloneLayerRequest {
+    uint32 source_layer = 1;
+    uint32 dest_layer = 2;
+}
+
+message CloneLayerResponse {
+    oneof result {
+        bool ok = 1;
+        CloneLayerErrorCode err = 2;
+    }
+}
+
+enum CloneLayerErrorCode {
+    CLONE_LAYER_ERR_OK = 0;
+    CLONE_LAYER_ERR_GENERIC = 1;
+    CLONE_LAYER_ERR_INVALID_LAYER = 2;
 }
 
 message MoveLayerRequest {
